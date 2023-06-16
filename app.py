@@ -21,4 +21,7 @@ def clean_players():
         cleaned.append(fixed)
     return cleaned
 
+
+
+# Sarah is awesome
     def balance_teams():
