@@ -7,12 +7,11 @@ TEAMS = []
 PLAYERS = {}
 
 
-def clean_players():
+def clean ():
     global TEAMS
     global PLAYERS
-
     cleaned = []
-    for players in constants:
+    for players in PLAYERS:
         fixed = {}
         fixed ["name"] = players["name"]
         fixed ["guardians"] = players["guardians"].split(" and ")[0]
@@ -23,6 +22,7 @@ def clean_players():
         fixed["height"] = int(players["height"])
         cleaned.append(fixed)
     return cleaned
+
 
 def level_of_exp():
     global TEAMS
@@ -74,6 +74,8 @@ def balance_teams():
                   warriors.append(players["name"])
              if len(leveln_exp) == num_of_players:
                   warriors.append(players["name"])
+        print(balance_teams)
+        return balance_teams
 
 
 
@@ -143,15 +145,11 @@ def start():
                 print(f"{e}")
                 continue
         else:
-             choice_picked.lower() == "a" or choice_picked.lower() == "b" or choice_picked.lower() == "c":
+             choice_picked.lower() == "a" or choice_picked.lower() == "b" or choice_picked.lower() == "c"
              break
     print("Team:      ")
     ("\n")
-    while True: 
-        try:
-                choice_picked = input(" ")
-                if choice_picked == "a"
-                print
+    
         
              
                 
@@ -161,7 +159,9 @@ def start():
 
 
 if __name__ == "__main__":
-     start()
+     balance_teams()
+     
+
             
 
     
