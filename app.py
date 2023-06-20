@@ -36,6 +36,7 @@ def level_of_exp():
             level_exp.append(player)
         else:
             leveln_exp.append(player)
+        return players
 
 
 def balance_teams():
@@ -50,14 +51,15 @@ def balance_teams():
         bandits = []
         warriors = []
         players_on_team = level_exp + leveln_exp
+        total_team_number = len(players_on_team / len(teams))
         num_of_players = int(3)
         average_height = round(sum["height"]for players in []) / len(players_on_team)
 
         for players in panthers:
             if len(level_exp) == num_of_players:
-                panthers.append(players["name"])
+                panthers.append(players["name".join["guardians"]])
             if len(leveln_exp) == num_of_players:
-                panthers.append(players["name"])
+                panthers.append(players["name".join["guardians"]])
 
 
         for players in bandits:
@@ -105,13 +107,14 @@ def start():
     print("Welcome to the Basketball Team Stats tool")
     print("\n-----MENU-----\n")
 
-    input("Please choose option A or B:   ")
+    print("Please choose option A or B:   ")
     print("A. Display Team Stats")
     print("B. Quit")
+    ("\n")
     while True:
         try:
                 choice_picked = input(" ")
-                if choice_picked != ("A or B"):
+                if choice_picked != "a" and choice_picked != "b":
                    raise Exception("Sorry invalid choice")
         except ValueError:
                 print("Please enter A or B")
@@ -119,29 +122,36 @@ def start():
         except Exception as e:
                 print(f"{e}")
                 continue
-        input("Choose a team by entering the corresponding letter.")
-        print("A. Panthers")
-        print("B. Bandits")
-        print("C. Warriors")
+        else:
+             choice_picked.lower() == "a" or choice_picked.lower() == "b"
+             break 
 
-    
-            choice_picked = input(" "):
-            if choice_picked != ("A, B, or C"):
-                raise Exception("Sorry invalid choice")
+    print("Choose a team by entering the corresponding letter.")
+    print("A. Panthers")
+    print("B. Bandits")
+    print("C. Warriors")
+    ("\n")
+    while True:
+        try: 
+                choice_picked = input(" ")
+                if choice_picked != "a" and choice_picked != "b" and choice_picked != "c":
+                    raise Exception("Sorry invalid choice")
         except ValueError:
                 print("Please enter A, B, or C")
-        
-                
-                break
-        elif choice_picked != ("A, B, or C"):
-                print("Sorry invalid choice")
-                print("Please enter A, B, or C")
+                continue
+        except Exception as e:
+                print(f"{e}")
                 continue
         else:
-             choice_picked.lower() == "b"
-             print("Maybe next time.")
+             choice_picked.lower() == "a" or choice_picked.lower() == "b" or choice_picked.lower() == "c":
              break
-    
+    print("Team:      ")
+    ("\n")
+    while True: 
+        try:
+                choice_picked = input(" ")
+                if choice_picked == "a"
+                print
         
              
                 
