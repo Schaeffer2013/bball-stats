@@ -1,10 +1,11 @@
+from constants import PLAYERS, TEAMS
 import copy 
 players = PLAYERS.copy()
 teams = TEAMS.copy()
 import constants
-from constants import PLAYERS, TEAMS
 TEAMS = []
 PLAYERS = {}
+
 
 def clean_players():
     global TEAMS
@@ -22,46 +23,6 @@ def clean_players():
         fixed["height"] = int(players["height"])
         cleaned.append(fixed)
     return cleaned
-def start_stats_tool():
-    global TEAMS
-    global PLAYERS
-    choice_picked()
-
-
-    print("Welcome to the Basketball Team Stats tool")
-
-    print("-----MENU-----")
-
-    input("Please choose option A or B")
-    print("A. Display Team Stats")
-    print("B. Quit")
-    while True:
-        try:
-            choice_picked = input(" ")
-            if choice_picked != ("A or B"):
-                raise Exception("Sorry invalid choice")
-        except ValueError:
-                print("Please enter A or B")
-                continue
-        except Exception as e:
-                print(f"{e}")
-                continue
-        if choice_picked.lower() == "a":
-                print("Enter an option"    )   
-                print("A. Panthers")
-                print("B. Bandits")
-                print("C. Warriors")
-                continue
-        elif choice_picked.lower() == "b":
-                print("Maybe next time.")
-                break
-        
-             
-                
-
-
-        
-
 
 def level_of_exp():
     global TEAMS
@@ -77,15 +38,20 @@ def level_of_exp():
             leveln_exp.append(player)
 
 
-    def balance_teams():
+def balance_teams():
         global TEAMS
         global PLAYERS
+
+        level_exp = []
+        leveln_exp = []
+
 
         panthers = []
         bandits = []
         warriors = []
-        balance_teams = level_exp + leveln_exp
+        players_on_team = level_exp + leveln_exp
         num_of_players = int(3)
+        average_height = round(sum["height"]for players in []) / len(players_on_team)
 
         for players in panthers:
             if len(level_exp) == num_of_players:
@@ -108,6 +74,84 @@ def level_of_exp():
                   warriors.append(players["name"])
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def start():
+    global TEAMS
+    global PLAYERS
+
+
+    print("Welcome to the Basketball Team Stats tool")
+    print("\n-----MENU-----\n")
+
+    input("Please choose option A or B:   ")
+    print("A. Display Team Stats")
+    print("B. Quit")
+    while True:
+        try:
+                choice_picked = input(" ")
+                if choice_picked != ("A or B"):
+                   raise Exception("Sorry invalid choice")
+        except ValueError:
+                print("Please enter A or B")
+                continue
+        except Exception as e:
+                print(f"{e}")
+                continue
+        input("Choose a team by entering the corresponding letter.")
+        print("A. Panthers")
+        print("B. Bandits")
+        print("C. Warriors")
+
+    
+            choice_picked = input(" "):
+            if choice_picked != ("A, B, or C"):
+                raise Exception("Sorry invalid choice")
+        except ValueError:
+                print("Please enter A, B, or C")
+        
+                
+                break
+        elif choice_picked != ("A, B, or C"):
+                print("Sorry invalid choice")
+                print("Please enter A, B, or C")
+                continue
+        else:
+             choice_picked.lower() == "b"
+             print("Maybe next time.")
+             break
+    
+        
+             
+                
+
+
+    
+
+
+if __name__ == "__main__":
+     start()
             
 
     
