@@ -1,57 +1,55 @@
 from constants import PLAYERS, TEAMS
 import copy 
-players = PLAYERS.copy()
-teams = TEAMS.copy()
-import constants
-TEAMS = []
-PLAYERS = {}
+players_data = []
+teams_data = []
+teams = []
+
+def data_collected():
+    players_data = copy.deepcopy(PLAYERS)
+    teams_data = copy.deepcopy(TEAMS)
+    return players_data, teams_data
 
 
-def clean ():
-    global TEAMS
-    global PLAYERS
-    cleaned = []
-    for players in PLAYERS:
+
+def clean_data(data):
+
+    for player in data:
         fixed = {}
-        fixed ["name"] = players["name"]
-        fixed ["guardians"] = players["guardians"].split(" and ")[0]
-        if players["experience"] == "True":
+        fixed ["name"] = player["name"]
+        fixed ["guardians"] = player["guardians"].split(" and ")[0]
+        if player["experience"] == "YES":
             fixed["experience"] = True
         else:
             fixed["experience"] = False
-        fixed["height"] = int(players["height"])
-        cleaned.append(fixed)
-    return cleaned
+        fixed["height"] = int(player["height"])
+    print(clean_data(data))
+    return clean_data(data)
+        
+    
 
 
-def level_of_exp():
-    global TEAMS
-    global PLAYERS
-
-    level_exp = []
-    leveln_exp = []
+def level_of_exp(level_exp, leveln_exp):
+    players = copy.deepcopy(PLAYERS)
 
     for player in players:
         if player["experience"] ==  True:
             level_exp.append(player)
         else:
             leveln_exp.append(player)
-        return players
+    
+    return players
 
 
-def balance_teams():
-        global TEAMS
-        global PLAYERS
-
-        level_exp = []
-        leveln_exp = []
+def balance_teams(level_exp, leveln_exp):
+        players = copy.deepcopy(PLAYERS)
+        teams = copy.deepcopy(TEAMS)
 
 
-        panthers = []
-        bandits = []
-        warriors = []
+        panthers = "A"
+        bandits = "B"
+        warriors = "C"
         players_on_team = level_exp + leveln_exp
-        total_team_number = len(players_on_team / len(teams))
+        total_team_number = (players_on_team / (teams))
         num_of_players = int(3)
         average_height = round(sum["height"]for players in []) / len(players_on_team)
 
@@ -64,17 +62,17 @@ def balance_teams():
 
         for players in bandits:
              if len(level_exp) == num_of_players:
-                bandits.append(players["name"])
+                bandits.append(players["name".join["guardians"]])
              if len(leveln_exp) == num_of_players:
-                  bandits.append(players["name"])
+                  bandits.append(players["name".join["guardians"]])
 
 
         for players in warriors:
              if len(level_exp) == num_of_players:
-                  warriors.append(players["name"])
+                  warriors.append(players["name".join["guardians"]])
              if len(leveln_exp) == num_of_players:
-                  warriors.append(players["name"])
-        print(balance_teams)
+                  warriors.append(players["name".join["guardians"]])
+                
         return balance_teams
 
 
@@ -102,8 +100,8 @@ def balance_teams():
 
 
 def start():
-    global TEAMS
-    global PLAYERS
+    players = copy.deepcopy(PLAYERS)
+    teams = copy.deepcopy(TEAMS)
 
 
     print("Welcome to the Basketball Team Stats tool")
@@ -148,7 +146,17 @@ def start():
              choice_picked.lower() == "a" or choice_picked.lower() == "b" or choice_picked.lower() == "c"
              break
     print("Team:      ")
+    ("\n-----------------------\n")
+    print("Total players:    ")
+    print("Total experienced:    ")
+    print("Total inexperienced:    ")
+    print("Average height:    ")
+
     ("\n")
+    print("Players on Team:")
+
+    ("\n")
+    print("Guardians:")
     
         
              
@@ -159,7 +167,8 @@ def start():
 
 
 if __name__ == "__main__":
-     balance_teams()
+    print(clean_data(clean_data))
+     
      
 
             
