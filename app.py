@@ -5,15 +5,18 @@ teams_data = []
 teams = []
 
 def data_collected():
+    global players_data
+    global teams_data
     players_data = copy.deepcopy(PLAYERS)
     teams_data = copy.deepcopy(TEAMS)
-    return players_data, teams_data
 
 
 
-def clean_data(data):
+def clean_data():
+    cleaned = []
+    players_data = copy.deepcopy(PLAYERS)
 
-    for player in data:
+    for player in players_data:
         fixed = {}
         fixed ["name"] = player["name"]
         fixed ["guardians"] = player["guardians"].split(" and ")[0]
@@ -22,8 +25,9 @@ def clean_data(data):
         else:
             fixed["experience"] = False
         fixed["height"] = int(player["height"])
-    print(clean_data(data))
-    return clean_data(data)
+    clean_data.append(cleaned)
+    return cleaned
+print(clean_data(players_data))
         
     
 
@@ -167,7 +171,9 @@ def start():
 
 
 if __name__ == "__main__":
-    print(clean_data(clean_data))
+    data_collected()
+    clean_data(players_data)
+    cleaned = clean_data(players_data)
      
      
 
