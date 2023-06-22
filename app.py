@@ -14,60 +14,51 @@ def data_collected():
 
 def clean_data(players_data):
     cleaned = []
-    players_data = copy.deepcopy(PLAYERS)
 
     for player in players_data:
         fixed = {}
         fixed ['name'] = player['name']
-        fixed ['guardians'] = player['guardians'].split( 'and' )[0]
+        fixed ['guardians'] = player['guardians'].split( 'and' )
         if player['experience'] == "YES":
            fixed['experience'] = True
         else:
-           fixed['experience'] = False
-        height_str = players_data[3]
-        print(height_str)
+            player['experience'] == "NO"
+            fixed['experience'] = False
+        height_str = player['height']
         height_str = height_str.replace(' inches', '')
-        heigt_int = int(height_str)
-        fixed ['height'] = heigt_int
+        height_int = int(height_str)
+        fixed ['height'] = height_int
         
 
-    cleaned.append(fixed)
+        cleaned.append(fixed)
     return cleaned
 
-        
-    
 
 
-def level_of_exp(level_exp, leveln_exp):
-    players = copy.deepcopy(PLAYERS)
 
-    for player in players:
-        if player["experience"] ==  True:
-            level_exp.append(player)
-        else:
-            leveln_exp.append(player)
-    
-    return players
+def balance_teams(players_data, teams_data):
 
-
-def balance_teams(level_exp, leveln_exp):
-        players = copy.deepcopy(PLAYERS)
-        teams = copy.deepcopy(TEAMS)
-
-
-        panthers = "A"
-        bandits = "B"
-        warriors = "C"
-        players_on_team = level_exp + leveln_exp
-        total_team_number = (players_on_team / (teams))
+        exp = ['experience', True]
+        n_exp = ['experience', False]
+        panthers = 'A'
+        bandits = 'B'
+        warriors = 'C'
+        players_on_team = exp + n_exp
+        total_team_number = len(players_data) / len(teams_data)
         num_of_players = int(3)
-        average_height = round(sum["height"]for players in []) / len(players_on_team)
+        
 
-        for players in panthers:
-            if len(level_exp) == num_of_players:
-                panthers.append(players["name".join["guardians"]])
-            if len(leveln_exp) == num_of_players:
-                panthers.append(players["name".join["guardians"]])
+        total_height = 0
+        for player in players_data:
+             height =  
+             total_height += height
+
+        for players in players_data, teams_data:
+            if len(exp) == num_of_players:
+                panthers.append(players['name'.join['guardians']])
+                print(panthers['name'.join['guardians']])
+            if len(n_exp) == num_of_players:
+                panthers.append(players['name'.join['guardians']])
 
 
         for players in bandits:
@@ -179,7 +170,7 @@ def start():
 if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
-    
+    balance_teams(players_data, teams_data)
     
      
      
