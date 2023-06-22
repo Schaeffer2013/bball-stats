@@ -25,6 +25,7 @@ def clean_data(players_data):
         else:
            fixed['experience'] = False
         height_str = players_data[3]
+        print(height_str)
         height_str = height_str.replace(' inches', '')
         heigt_int = int(height_str)
         fixed ['height'] = heigt_int
@@ -178,6 +179,7 @@ def start():
 if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
+    
     
      
      
