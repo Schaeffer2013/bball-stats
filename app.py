@@ -12,22 +12,27 @@ def data_collected():
 
 
 
-def clean_data():
+def clean_data(players_data):
     cleaned = []
     players_data = copy.deepcopy(PLAYERS)
 
     for player in players_data:
         fixed = {}
-        fixed ["name"] = player["name"]
-        fixed ["guardians"] = player["guardians"].split(" and ")[0]
-        if player["experience"] == "YES":
-            fixed["experience"] = True
+        fixed ['name'] = player['name']
+        fixed ['guardians'] = player['guardians'].split( 'and' )[0]
+        if player['experience'] == "YES":
+           fixed['experience'] = True
         else:
-            fixed["experience"] = False
-        fixed["height"] = int(player["height"])
-    clean_data.append(cleaned)
+           fixed['experience'] = False
+        height_str = players_data[3]
+        height_str = height_str.replace(' inches', '')
+        heigt_int = int(height_str)
+        fixed ['height'] = heigt_int
+        
+
+    cleaned.append(fixed)
     return cleaned
-print(clean_data(players_data))
+
         
     
 
@@ -172,8 +177,8 @@ def start():
 
 if __name__ == "__main__":
     data_collected()
-    clean_data(players_data)
     cleaned = clean_data(players_data)
+    
      
      
 
