@@ -7,6 +7,7 @@ teams = []
 def data_collected():
     global players_data
     global teams_data
+    global teams
     players_data = copy.deepcopy(PLAYERS)
     teams_data = copy.deepcopy(TEAMS)
 
@@ -38,60 +39,40 @@ def clean_data(players_data):
 
 def balance_teams(players_data, teams_data):
 
-        exp = ['experience', True]
-        n_exp = ['experience', False]
-        panthers = 'A'
-        bandits = 'B'
-        warriors = 'C'
-        players_on_team = exp + n_exp
+
+        exp = []
+        n_exp = []
+        players_on_team = []
         total_team_number = len(players_data) / len(teams_data)
-        num_of_players = int(3)
+        num_teams = len(teams_data)
+        team = []
         
 
         total_height = 0
+        for team, players_on_team
         for player in players_data:
-             height =  
+             height = player['height']
              total_height += height
+        
 
-        for players in players_data, teams_data:
-            if len(exp) == num_of_players:
-                panthers.append(players['name'.join['guardians']])
-                print(panthers['name'.join['guardians']])
-            if len(n_exp) == num_of_players:
-                panthers.append(players['name'.join['guardians']])
+        for player in players_data:
+            if player['experience'] == 'YES':
+                 exp.append(player)
+            else:
+                 n_exp.append(player)
+    
+        for index in range(num_teams):
+             team = teams_data[index]
+             players_on_team.extend(exp[index::num_teams])
+             players_on_team.extend(n_exp[index::num_teams])
 
+        for index, player in enumerate(players_data, 1):
+             team = teams_data[(index - 1) % num_teams]
+             player['team'] = team
 
-        for players in bandits:
-             if len(level_exp) == num_of_players:
-                bandits.append(players["name".join["guardians"]])
-             if len(leveln_exp) == num_of_players:
-                  bandits.append(players["name".join["guardians"]])
-
-
-        for players in warriors:
-             if len(level_exp) == num_of_players:
-                  warriors.append(players["name".join["guardians"]])
-             if len(leveln_exp) == num_of_players:
-                  warriors.append(players["name".join["guardians"]])
                 
         return balance_teams
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def print_players(players)
 
 
 
@@ -101,8 +82,8 @@ def balance_teams(players_data, teams_data):
 
 
 def start():
-    players = copy.deepcopy(PLAYERS)
-    teams = copy.deepcopy(TEAMS)
+    players_data = copy.deepcopy(PLAYERS)
+    teams_data = copy.deepcopy(TEAMS)
 
 
     print("Welcome to the Basketball Team Stats tool")
@@ -170,7 +151,8 @@ def start():
 if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
-    balance_teams(players_data, teams_data)
+    balance_teams(cleaned, teams_data)
+    start()
     
      
      
