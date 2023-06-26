@@ -37,31 +37,31 @@ def clean_data(players_data):
 
 
 
-def balance_teams(players_data, teams_data):
+def balance_teams(cleaned, teams_data):
         balanced = []
-        #team_exp_count = {team:  {'experienced': 0, 'non_experienced': 0} for team in teams_data}
         #average_height = total_height / players_on_team
-    
+        num_exp = sum(player['experience'] == 'YES' for player in organize_team)
+        num_non_exp = len(organize_team) // len(teams_data)
+
 
         for team_name in teams_data: 
+             team_players = []
+             num_exp
              organize_team = {
                   'name': team_name,
                   'players': []
              }
-        
+             
              
                   
              for player in players_data:
-                organize_team['players'].append(player)
-                print(player)
+              organize_team['players'].append(player)
+
         #for team in balance_teams:
              #print(team['name'])
              #for player in team['players']:
               #print('  ',player['name'])
-        #f player['experience'] == 'YES':
-                # team_exp_count[team]['experienced'] += 1
-        #else:
-                 #team_exp_count[team]['non_experienced'] +=1
+         
 
 
     
@@ -70,8 +70,8 @@ def balance_teams(players_data, teams_data):
            
              
   
-             
-             balanced.append(organize_team)
+        print(organize_team)   
+        balanced.append(organize_team)
         return balanced
 
 
@@ -152,7 +152,7 @@ def start():
 if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
-    balanced = balance_teams(players_data, teams_data)
+    balanced = balance_teams(cleaned, teams_data)
 
 
     
