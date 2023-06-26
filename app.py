@@ -40,39 +40,53 @@ def clean_data(players_data):
 def balance_teams(players_data, teams_data):
 
 
-        exp = []
-        n_exp = []
+        experienced = []
+        non_experienced = []
         players_on_team = []
-        total_team_number = len(players_data) / len(teams_data)
         num_teams = len(teams_data)
         team = []
+        team_exp_count = {team:  {'experienced': 0, 'non_experienced': 0} for team in teams_data}
         
-
-        total_height = 0
-        for team, players_on_team
+             
+                  
         for player in players_data:
-             height = player['height']
-             total_height += height
+           total_per_team = len(players_data) / len(teams_data)
+           team = min(team_exp_count, key=lambda x: team_exp_count[x]['experienced'] + team_exp_count[x]['non_experienced'])
+
+           if player['experience'] == 'YES':
+                 team_exp_count[team]['experienced'] += 1
+           else:
+                 team_exp_count[team]['non_experienced'] +=1
+           player['team'] = team
+
+
+        for team_name in teams_data:
+             team = {'name': team_name, 'Total players': 6, 'Experienced players': 3, 'Non-experienced players': 3, 'Average height': 0, 'players':[], 'Guardians': []}
+             teams.append(team)
+
         
-
-        for player in players_data:
-            if player['experience'] == 'YES':
-                 exp.append(player)
-            else:
-                 n_exp.append(player)
-    
-        for index in range(num_teams):
-             team = teams_data[index]
-             players_on_team.extend(exp[index::num_teams])
-             players_on_team.extend(n_exp[index::num_teams])
 
         for index, player in enumerate(players_data, 1):
              team = teams_data[(index - 1) % num_teams]
              player['team'] = team
 
-                
+     
+        for players in players_data:
+             total_height = 0
+             players_on_team = len(players)    
+             
+             for player in players:
+                  height = height_int
+                  total_height += height
+
+             if players_on_team > 0:
+                  average_height = total_height / players_on_team
+             else:
+                  average_height = 0
+             
+        
         return balance_teams
-def print_players(players)
+
 
 
 
@@ -152,7 +166,7 @@ if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
     balance_teams(cleaned, teams_data)
-    start()
+
     
      
      
