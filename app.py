@@ -52,7 +52,7 @@ def balance_teams(players_data, teams_data):
              
                   
              for player in players_data:
-                ['players'].append(player)
+                organize_team['players'].append(player)
                 print(player)
         #for team in balance_teams:
              #print(team['name'])
@@ -71,7 +71,7 @@ def balance_teams(players_data, teams_data):
              
   
              
-             balanced.append(organize_team, player)
+             balanced.append(organize_team)
         return balanced
 
 
