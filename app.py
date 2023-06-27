@@ -35,44 +35,43 @@ def clean_data(players_data):
     return cleaned
 
 
-
+import random
 
 def balance_teams(players_data, teams_data):
-    balanced = []
+    balanced_teams = []
         #average_height = total_height / players_on_team
     team_total = len(players_data) // len(teams_data)
 
+    for team in teams_data:
+        balanced_team = {'name': team, 'players': {'experienced':[], 'non_experienced': []}}
+        balanced_teams.append(balanced_team)
+        experienced_players = [player for player in players_data if player['experience'] == True]
+        non_experienced_players = [player for player in players_data if player['experience'] == False]
 
-    for team_name in teams_data: 
-            organize_team = {
-                'team': team_name,
-                'players': []
-            }
-            
-            balanced.append(organize_team)
-            
-            num_exp = []
-            num_non_exp = []
+        random.shuffle(experienced_players)
+        random.shuffle(non_experienced_players)
 
-            for player in players_data:
-                if player['experience'] == 'YES':
-                   num_exp.append(player)
-                else:
-                     num_non_exp.append(player)
-              
-             
-                 
-    
-            
-            organize_team['players'].append(player)
-            print(organize_team)
-                    
-                   
-                   #if len(team_players) == team_total:
-                    #break
-            
+    for team in balanced_teams:
+        while len(team['players']['experienced']) < len(experienced_players) // len(teams_data):
+             if experienced_players:
+                  player = experienced_players.pop()
+                  team['players']['experienced'].append(player)
+                  team['total_height'] += int(player['height'].split()[0])
+                  print(balanced_team)
 
-    return balanced
+    for team in balanced_teams:
+        while len(team['players']['non_experienced']) < len(non_experienced_players) // len(teams_data):
+             if non_experienced_players:
+                  team['players']['non_experienced'].append(non_experienced_players.pop())
+    #print(balanced_teams)
+    for player in players_data:
+         
+
+
+
+
+   
+     return balanced_teams
 
 
 
@@ -152,7 +151,7 @@ def start():
 if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
-    balanced = balance_teams(cleaned, teams_data)
+    balanced_teams = balance_teams(cleaned, teams_data)
 
 
     
