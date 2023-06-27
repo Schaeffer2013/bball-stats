@@ -54,30 +54,27 @@ def balance_teams(players_data, teams_data):
         while len(team['players']['experienced']) < len(experienced_players) // len(teams_data):
              if experienced_players:
                   player = experienced_players.pop()
+                  team['players_height'] += int(player['height'])
                   team['players']['experienced'].append(player)
-                  #team['players_height'] += int(player['height'].split()[0])
+                 
 
 
     for team in balanced_teams:
         while len(team['players']['non_experienced']) < len(non_experienced_players) // len(teams_data):
              if non_experienced_players:
                   player = non_experienced_players.pop()
+                  team['players_height'] += int(player['height'])
                   team['players']['non_experienced'].append(player)
-                  #team['players_height'] += int(player['height'].split()[0])
-    #for team in balanced_teams:
-         #team['players']['experienced'].sort(key=lambda player)
+                  
+    for team in balanced_teams:
+         team['players']['experienced'].sort(key=lambda player: int(player['height']))
+         team['players']['non_experienced'].sort(key=lambda player: int(player['height']))
     for team in balanced_teams:
          players_on_team = len(team['players']['experienced']) + len(team['players']['non_experienced'])
          if players_on_team > 0:
               team['average_height'] = team['players_height'] / players_on_team
-    #print(balanced_teams)
-    #for player in players_data:
-         
+   
 
-
-
-
-    print(balanced_teams)
     return balanced_teams
 
 
@@ -101,51 +98,57 @@ def start():
     print("B. Quit")
     ("\n")
     while True:
-        try:
-                choice_picked = input(" ")
-                if choice_picked != "a" and choice_picked != "b":
-                   raise Exception("Sorry invalid choice")
-        except ValueError:
-                print("Please enter A or B")
-                continue
-        except Exception as e:
-                print(f"{e}")
-                continue
+        choice_picked = input(" ")
+        if choice_picked.lower() == "a":
+            print("Choose a team by entering the corresponding letter.")
+            print("A. Panthers")
+            print("B. Bandits")
+            print("C. Warriors")
+            ("\n")
+            while True:
+                team_choice = input(" ")
+                if team_choice != "a" and team_choice != "b" and team_choice != "c":
+                    print("Invalid team choice, please choose one of the above options.")
+                    continue
+                else:
+                    break
+                        
+        
+       
+            team_selected = None
+            for team in balance_teams(players_data, teams_data):
+                if team['name'].lower() == teams_data[ord(team_choice.lower()) - ord('a')].lower():
+                    team_selected = team
+                    break
+            if team_selected:
+                print(f"Team:", team_selected['name'])
+                ("\n-----------------------\n")
+                players_on_team = len(team['players']['experienced']) + len(team['players']['non_experienced'])
+                print("Total players:", team_selected['players_on_team'])
+                print("Total experienced:", len(team_selected['players']['experienced']))
+                print("Total inexperienced:", len(team_selected['players']['non_experienced']))
+                print("Average height:", team_selected['average_height'])
+                print("\nPlayers on Team:")
+                for player in team_selected['players']['experienced']:
+                    print(player['name'], "(Experienced)")
+                for player in team_selected['players']['non_experienced']:
+                    print(player['name'], "(Non_Experienced)")
+                print("\nGauradians:")
+                for player in team_selected['players']['experienced']:
+                    print(player['guardians'])
+                for player in team_selected['players']['non_experienced']:
+                    print(player['guardiands'])
+            else:
+                print("Team selected not found. Please try again.")
+
+
+        elif choice_picked.lower() == "b":
+            print("Exiting out of the program.")
+            break 
         else:
-             choice_picked.lower() == "a" or choice_picked.lower() == "b"
-             break 
+            print("Invalid choice. Please try again.")
 
-    print("Choose a team by entering the corresponding letter.")
-    print("A. Panthers")
-    print("B. Bandits")
-    print("C. Warriors")
-    ("\n")
-    while True:
-        try: 
-                choice_picked = input(" ")
-                if choice_picked != "a" and choice_picked != "b" and choice_picked != "c":
-                    raise Exception("Sorry invalid choice")
-        except ValueError:
-                print("Please enter A, B, or C")
-                continue
-        except Exception as e:
-                print(f"{e}")
-                continue
-        else:
-             choice_picked.lower() == "a" or choice_picked.lower() == "b" or choice_picked.lower() == "c"
-             break
-    print(f"Team:   {team['name']}   ")
-    ("\n-----------------------\n")
-    print(f"Total players:   {team}")
-    print(f"Total experienced:   {team['experienced']}    ")
-    print(f"Total inexperienced:   {team['non_experienced']}    ")
-    print(f"Average height:    ")
-
-    ("\n")
-    print("Players on Team:")
-
-    ("\n")
-    print("Guardians:")
+    
     
         
              
@@ -159,6 +162,7 @@ if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
     balanced_teams = balance_teams(cleaned, teams_data)
+    start()
 
 
     
