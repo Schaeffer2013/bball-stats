@@ -39,11 +39,10 @@ import random
 
 def balance_teams(players_data, teams_data):
     balanced_teams = []
-        #average_height = total_height / players_on_team
     team_total = len(players_data) // len(teams_data)
 
     for team in teams_data:
-        balanced_team = {'name': team, 'players': {'experienced':[], 'non_experienced': []}}
+        balanced_team = {'name': team, 'players': {'experienced':[], 'non_experienced': []}, 'players_height': 0, 'average_height': 0}
         balanced_teams.append(balanced_team)
         experienced_players = [player for player in players_data if player['experience'] == True]
         non_experienced_players = [player for player in players_data if player['experience'] == False]
@@ -56,22 +55,30 @@ def balance_teams(players_data, teams_data):
              if experienced_players:
                   player = experienced_players.pop()
                   team['players']['experienced'].append(player)
-                  team['total_height'] += int(player['height'].split()[0])
-                  print(balanced_team)
+                  #team['players_height'] += int(player['height'].split()[0])
+
 
     for team in balanced_teams:
         while len(team['players']['non_experienced']) < len(non_experienced_players) // len(teams_data):
              if non_experienced_players:
-                  team['players']['non_experienced'].append(non_experienced_players.pop())
+                  player = non_experienced_players.pop()
+                  team['players']['non_experienced'].append(player)
+                  #team['players_height'] += int(player['height'].split()[0])
+    #for team in balanced_teams:
+         #team['players']['experienced'].sort(key=lambda player)
+    for team in balanced_teams:
+         players_on_team = len(team['players']['experienced']) + len(team['players']['non_experienced'])
+         if players_on_team > 0:
+              team['average_height'] = team['players_height'] / players_on_team
     #print(balanced_teams)
-    for player in players_data:
+    #for player in players_data:
          
 
 
 
 
-   
-     return balanced_teams
+    print(balanced_teams)
+    return balanced_teams
 
 
 
@@ -132,7 +139,7 @@ def start():
     print(f"Total players:   {team}")
     print(f"Total experienced:   {team['experienced']}    ")
     print(f"Total inexperienced:   {team['non_experienced']}    ")
-    print(f"Average height:   {average_height}    ")
+    print(f"Average height:    ")
 
     ("\n")
     print("Players on Team:")
