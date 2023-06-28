@@ -44,7 +44,7 @@ def balance_teams(players_data, teams_data):
     
 
     for team in teams_data:
-        balanced_team = {'name': team, 'players':[], 'exerienced': 0, 'non_experienced': 0, 'average_height': 0}
+        balanced_team = {'name': team, 'players':[], 'experienced': 0, 'non_experienced': 0, 'total_height': 0, 'average_height': 0, 'total_players': 0}
         balanced.append(balanced_team)
 
     for player in players_data:
@@ -52,56 +52,37 @@ def balance_teams(players_data, teams_data):
             balanced_team = balanced.pop(0)
             balanced_team['players'].append(player)
             balanced_team['total_height'] += int(player['height'])
+            balanced_team['total_players'] += 1
             balanced.append(balanced_team)
             experienced_players.pop(0)
         elif player['experience'] == False and non_experienced_players:
             balanced_team = balanced.pop(0)
             balanced_team['players'].append(player)
             balanced_team['total_height'] += int(player['height'])
+            balanced_team['total_players'] += 1
             balanced.append(balanced_team)
             non_experienced_players.pop(0)
 
     for balanced_team in balanced:
+        balanced_team['players'].sort(key=lambda player: int(player['height']))
+
+    for balanced_team in balanced:
         players_on_team = len(balanced_team['players'])
         if players_on_team > 0:
-            balanced_team['average_height'] = balanced_team['total_height'] / players_on_team
+            balanced_team['average_height'] = round(balanced_team['total_height'] / players_on_team)
 
 
     
-    
-    print(balanced)
     return balanced
-
- 
-         
-    
-
-    #for team in balanced_teams:
 
        
        
        
        
                
-    #for team in balanced_teams:
-     # team['players']['experienced'].sort(key=lambda player: int(player['height']))
-      #   team['players']['non_experienced'].sort(key=lambda player: int(player['height']))
-    #for team in balanced_teams:
-     #    players_on_team = len(team['players']['experienced']) + len(team['players']['non_experienced'])
-      #   if players_on_team > 0:
-       #       team['average_height'] = team['players_height'] / players_on_team
-   
+
     
   
-
-
-
-
-
-
-
-
-
 def start():
     players_data = copy.deepcopy(PLAYERS)
     teams_data = copy.deepcopy(TEAMS)
@@ -115,37 +96,54 @@ def start():
     print("B. Quit")
     ("\n")
     while True:
-        choice_picked = input(" ")
-        if choice_picked.lower() == "a":
-            print("Choose a team by entering the corresponding letter.")
-            print("A. Panthers")
-            print("B. Bandits")
-            print("C. Warriors")
-            ("\n")
-            while True:
-                team_choice = input(" ")
-                if team_choice != "a" and team_choice != "b" and team_choice != "c":
-                    print("Invalid team choice, please choose one of the above options.")
-                    continue
-                else:
-                    break
+        try:
+            choice_picked = input(" ")
+            if choice_picked.lower() != "a" and choice_picked.lower() != "b":
+                raise Exception("Sorry invalid choice")
+        except ValueError:
+            print("Please enter A or B")
+            continue
+        except Exception as e:
+            print(f"{e}")
+            continue
+        else:
+            if choice_picked.lower() == "a" or choice_picked.lower() == "b":
+                break
+
+    print("Choose a team by entering the corresponding letter.")
+    print("A. Panthers")
+    print("B. Bandits")
+    print("C. Warriors")
+    ("\n")
+    while True:
+        try:
+            choice_picked = input(" ")
+            if choice_picked != "a" and choice_picked != "b" and choice_picked != "c":
+                raise Exception("Sorry invalid choice")
+        except ValueError:
+                print("Invalid choice, please enter A, B, or C.")
+                continue
+        except Exception as e:
+                print(f"{e}")
+                continue
+        else:
+            if choice_picked.lower() == "a" or choice_picked.lower() == "b" or choice_picked.lower() == "c":
+                break
                         
         
        
-            team_selected = None
-            for team in balance_teams(players_data, teams_data):
-                if team['name'].lower() == teams_data[ord(team_choice.lower()) - ord('a')].lower():
-                    team_selected = team
-                    break
-            
-            if team_selected:
-                print(f"Team:", team_selected['name'])
-                ("\n-----------------------\n")
-                players_on_team = len(team['players']['experienced']) + len(team['players']['non_experienced'])
-                print("Total players:", team_selected['players_on_team'])
-                print("Total experienced:", len(team_selected['players']['experienced']))
-                print("Total inexperienced:", len(team_selected['players']['non_experienced']))
-                print("Average height:", team_selected['average_height'])
+    team_selected = balanced[ord(choice_picked.lower()) - 97]
+
+    print(f"Team:", {team_selected['name']})
+    ("\n-----------------------\n")
+    print(f"Total players:", {team_selected['total_players']})
+
+
+    experienced_players = sum(1 for player in team_selected['players'] if player['experience'] == True)
+    non_experienced_players = sum(1 for player in team_selected['players'] if player['experience'] == False)
+    print(f"Total experienced: {experienced_players}")
+    print(f"Total inexperienced: {non_experienced_players}")
+    print(f"Average height: {team_selected['average_height']}")
                 print("\nPlayers on Team:")
                 for player in team_selected['players']['experienced']:
                     print(player['name'], "(Experienced)")
@@ -180,6 +178,7 @@ if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
     balanced = balance_teams(cleaned, teams_data)
+    start()
     
 
 
