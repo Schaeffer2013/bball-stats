@@ -1,3 +1,8 @@
+In this project I was presented with a constants module and needed to create a new file app.py. After importing the constants file through a deep.copy I was able to start working on organzing the players and all their data into three different teams evenly. A user is prompt with choosing a team and then able to view the specific team's statistics. The user is also prompt with being able to continue to view more teams or exit the program.
+
+
+
+
 # Basketball Team Stats Tool
 In this project you will be writing a program that reads from the "constants" data (`PLAYERS` and `TEAMS`) in `constants.py`. This data will need to be translated into a new collection of your choosing and the fields need to be changed to something that makes more sense for Python to do its comparisons.
 
