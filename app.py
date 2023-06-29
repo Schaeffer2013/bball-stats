@@ -37,43 +37,53 @@ def clean_data(players_data):
 
 
 def balance_teams(players_data, teams_data):
-    balanced = []
+    balanced_teams = []
     team_total = len(players_data) // len(teams_data)
     experienced_players = [player for player in players_data if player['experience'] == True]
     non_experienced_players = [player for player in players_data if player['experience'] == False]
-    
+    num_teams = len(teams_data)
+    num_exp_players = len(experienced_players)
+    num_non_exp_players = len(non_experienced_players)
+    total_exp_per_team = num_exp_players // num_teams
+    total_non_exp_per_team = num_non_exp_players // num_teams
 
     for team in teams_data:
-        balanced_team = {'name': team, 'players':[], 'experienced': 0, 'non_experienced': 0, 'total_height': 0, 'average_height': 0, 'total_players': 0}
-        balanced.append(balanced_team)
+        balanced_team = {'name': team, 'players': [], 'experienced': 0, 'non_experienced': 0, 'guardians': [], 'total_height': 0, 'average_height': 0, 'total_players': 0}
+        balanced_teams.append(balanced_team)
 
-    for player in players_data:
-        if player['experience'] == True and experienced_players:
-            balanced_team = balanced.pop(0)
-            balanced_team['players'].append(player)
-            balanced_team['total_height'] += int(player['height'])
-            balanced_team['total_players'] += 1
-            balanced.append(balanced_team)
-            experienced_players.pop(0)
-        elif player['experience'] == False and non_experienced_players:
-            balanced_team = balanced.pop(0)
-            balanced_team['players'].append(player)
-            balanced_team['total_height'] += int(player['height'])
-            balanced_team['total_players'] += 1
-            balanced.append(balanced_team)
-            non_experienced_players.pop(0)
 
-    for balanced_team in balanced:
+    team_index = 0
+    while experienced_players:
+        player = experienced_players.pop(0)
+        team = balanced_teams[team_index]
+        team['players'].append(player)
+        team['guardians'].append(player['guardians'])
+        team['total_height'] += int(player['height'])
+        team['total_players'] += 1
+        team_index = (team_index + 1) % num_teams
+
+    team_index = 0
+    while non_experienced_players:
+        player = non_experienced_players.pop(0)
+        team = balanced_teams[team_index]
+        team['players'].append(player)
+        team['guardians'].append(player['guardians'])
+        team['total_height'] += int(player['height'])
+        team['total_players'] += 1
+        team_index = (team_index + 1) % num_teams
+
+
+    for balanced_team in balanced_teams:
         balanced_team['players'].sort(key=lambda player: int(player['height']))
 
-    for balanced_team in balanced:
+    for balanced_team in balanced_teams:
         players_on_team = len(balanced_team['players'])
         if players_on_team > 0:
-            balanced_team['average_height'] = round(balanced_team['total_height'] / players_on_team)
+            balanced_team['average_height'] = round(balanced_team['total_height'] / players_on_team, 1)
 
 
     
-    return balanced
+    return balanced_teams
 
        
        
@@ -107,62 +117,67 @@ def start():
             print(f"{e}")
             continue
         else:
-            if choice_picked.lower() == "a" or choice_picked.lower() == "b":
+            if choice_picked.lower() == "a":
+                display_team_stats
                 break
+            elif choice_picked.lower() == "b":
+                  quit
 
-    print("Choose a team by entering the corresponding letter.")
-    print("A. Panthers")
-    print("B. Bandits")
-    print("C. Warriors")
-    ("\n")
-    while True:
-        try:
-            choice_picked = input(" ")
-            if choice_picked != "a" and choice_picked != "b" and choice_picked != "c":
-                raise Exception("Sorry invalid choice")
-        except ValueError:
+def display_team_stats():
+
+        print("Choose a team by entering the corresponding letter.")
+        print("A. Panthers")
+        print("B. Bandits")
+        print("C. Warriors")
+        ("\n")
+        while True:
+            try:
+                choice_picked = input(" ")
+                if choice_picked != "a" and choice_picked != "b" and choice_picked != "c":
+                    raise Exception("Sorry invalid choice")
+            except ValueError:
                 print("Invalid choice, please enter A, B, or C.")
                 continue
-        except Exception as e:
+            except Exception as e:
                 print(f"{e}")
                 continue
-        else:
-            if choice_picked.lower() == "a" or choice_picked.lower() == "b" or choice_picked.lower() == "c":
-                break
+            else:
+                if choice_picked.lower() == "a" or choice_picked.lower() == "b" or choice_picked.lower() == "c":
+                   break
                         
         
        
-    team_selected = balanced[ord(choice_picked.lower()) - 97]
+        team_selected = balanced_teams[ord(choice_picked) - 97]
 
-    print(f"Team:", {team_selected['name']})
-    ("\n-----------------------\n")
-    print(f"Total players:", {team_selected['total_players']})
+        print("Team:", team_selected['name'])
+        ("\n-----------------------\n")
 
+        print("Total players:", len(team_selected['players']))
+        print("Total experienced:", len([player for player in team_selected['players'] if player['experience'] == True]))
+        print("Total inexperienced:", len([player for player in team_selected['players'] if player['experience'] == False]))
+        print("Average height:", (team_selected['average_height']))
+        print("\nPlayers on Team:")
+        players_list = ", " .join([player['name']for player in team_selected['players']])
+        print(f"{players_list}")
+        print("\nGuardians on Team:")
+        guardians_list = ", " .join(team_selected['guardians'])
+        print(f"{guardians_list}")
+        more_stats()
 
-    experienced_players = sum(1 for player in team_selected['players'] if player['experience'] == True)
-    non_experienced_players = sum(1 for player in team_selected['players'] if player['experience'] == False)
-    print(f"Total experienced: {experienced_players}")
-    print(f"Total inexperienced: {non_experienced_players}")
-    print(f"Average height: {team_selected['average_height']}")
-                print("\nPlayers on Team:")
-                for player in team_selected['players']['experienced']:
-                    print(player['name'], "(Experienced)")
-                for player in team_selected['players']['non_experienced']:
-                    print(player['name'], "(Non_Experienced)")
-                print("\nGauradians:")
-                for player in team_selected['players']['experienced']:
-                    print(player['guardians'])
-                for player in team_selected['players']['non_experienced']:
-                    print(player['guardiands'])
-            else:
-                print("Team selected not found. Please try again.")
-
-
-        elif choice_picked.lower() == "b":
-            print("Exiting out of the program.")
-            break 
+def more_stats():
+    while True:
+        proceed = input("Would you like to see more team statistics?  (Y/N)   ")
+        if proceed.lower() == 'y' :
+            start()
+        elif proceed.lower() == 'n' :
+            print("Thank you for viewing the statistics!")
+            break
         else:
-            print("Invalid choice. Please try again.")
+            print("Sorry that was a invalid choice, please enter a Y or N")
+
+
+
+
 
     
     
@@ -177,8 +192,9 @@ def start():
 if __name__ == "__main__":
     data_collected()
     cleaned = clean_data(players_data)
-    balanced = balance_teams(cleaned, teams_data)
+    balanced_teams = balance_teams(cleaned, teams_data)
     start()
+    display_team_stats()
     
 
 
