@@ -48,7 +48,7 @@ def balance_teams(players_data, teams_data):
     total_non_exp_per_team = num_non_exp_players // num_teams
 
     for team in teams_data:
-        balanced_team = {'name': team, 'players': [], 'experienced': 0, 'non_experienced': 0, 'guardians': [], 'total_height': 0, 'average_height': 0, 'total_players': 0}
+        balanced_team = {'name': team, 'players': [], 'experienced': 0, 'non_experienced': 0, 'total_height': 0, 'average_height': 0, 'total_players': 0, 'guardians': []}
         balanced_teams.append(balanced_team)
 
 
@@ -116,12 +116,13 @@ def start():
         except Exception as e:
             print(f"{e}")
             continue
-        else:
-            if choice_picked.lower() == "a":
-                display_team_stats
-                break
-            elif choice_picked.lower() == "b":
-                  quit
+
+        if choice_picked.lower() == "a":
+              display_team_stats()
+              break
+        elif choice_picked.lower() == "b":
+                  print("Maybe next time, bye for now.")
+                  break
 
 def display_team_stats():
 
@@ -160,13 +161,13 @@ def display_team_stats():
         players_list = ", " .join([player['name']for player in team_selected['players']])
         print(f"{players_list}")
         print("\nGuardians on Team:")
-        guardians_list = ", " .join(team_selected['guardians'])
+        guardians_list = ", " .join([guardian.strip() for guardians in team_selected['guardians'] for guardian in guardians])
         print(f"{guardians_list}")
         more_stats()
 
 def more_stats():
     while True:
-        proceed = input("Would you like to see more team statistics?  (Y/N)   ")
+        proceed = input("\n""Would you like to see more team statistics?  (Y/N)   ")
         if proceed.lower() == 'y' :
             start()
         elif proceed.lower() == 'n' :
@@ -194,7 +195,7 @@ if __name__ == "__main__":
     cleaned = clean_data(players_data)
     balanced_teams = balance_teams(cleaned, teams_data)
     start()
-    display_team_stats()
+    
     
 
 
